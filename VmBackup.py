@@ -1181,7 +1181,8 @@ def verify_vm_exist(vm_name):
 def get_all_vms():
     cmd = "%s/xe vm-list is-control-domain=false is-a-snapshot=false params=name-label --minimal" % xe_path
     vms = run_get_lastline(cmd)
-    return vms.split(',')
+    tmp = vms.replace('\\,', '\a')
+    return [str.replace('\a', ',') for str in tmp.split(',')]
 
 def show_vms_not_in_backup():
     # show all vm's not in backup scope
